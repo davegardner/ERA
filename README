@@ -1,0 +1,4 @@
+# ERA5 Climatology
+
+Downloads historical weather from the Copernicus ERA5 repository and averages it on a yearly and daily basis to produce climatalogical grib files suitable for use in OpenCPN.
+ 

@@ -1,0 +1,2 @@
+# Ignore data downloads from Capernicus
+era5_data/*.nc
