@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ERA5 File Downloads</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        .file { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .file h3 { margin-top: 0; }
+        a { color: #0066cc; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        .size { color: #666; }
+        .chunks { margin-top: 10px; }
+        .chunk-link { display: inline-block; margin: 5px; padding: 5px 10px; background: #f0f0f0; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>ERA5 Climatology File Downloads</h1>
+    
+    <div style="background-color: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <h3 style="margin-top: 0;">⚠️ OpenCPN Compatibility Testing</h3>
+        <p>If OpenCPN says "invalid GRIB", try these test files in order:</p>
+        <ol>
+            <li><a href="era5_minimal_test.grb2">Minimal GRIB2 (469 KB)</a> - 7 days, smallest test</li>
+            <li><a href="era5_minimal_test.grb">Minimal GRIB1 (235 KB)</a> - Same data, older format</li>
+        </ol>
+        <p><a href="OPENCPN_TROUBLESHOOTING.md">📖 Read full troubleshooting guide</a></p>
+    </div>
+    
+    <div class="file" style="background-color: #e8f5e9;">
+        <h3>⭐ NEW: Ultra-Compact GRIB2 (2.0° grid) - SMALLEST</h3>
+        <p><a href="era5_typical_year_6h_8x_1940-1940.grb2" download>Download era5_typical_year_6h_8x_1940-1940.grb2</a></p>
+        <p class="size">Size: 24 MB (16x smaller!)</p>
+        <p><strong>Configuration:</strong> 6-hourly, 2.0° grid (35 × 60 points)</p>
+        <p><strong>Best for:</strong> Large-scale wind patterns, strategic planning, quick overview</p>
+        <p><strong>Trade-off:</strong> Coarser grid (~222 km spacing) - loses fine coastal detail</p>
+    </div>
+    
+    <div class="file">
+        <h3>Option 1: Compressed GRIB2 File (Recommended)</h3>
+        <p><a href="era5_typical_year_6h_2x_1940-1940.grb2.gz" download>Download era5_typical_year_6h_2x_1940-1940.grb2.gz</a></p>
+        <p class="size">Size: 273 MB</p>
+        <p>After downloading, decompress with: <code>gunzip era5_typical_year_6h_2x_1940-1940.grb2.gz</code></p>
+    </div>
+    
+    <div class="file">
+        <h3>Option 2: Tar Archive</h3>
+        <p><a href="era5_output.tar.gz" download>Download era5_output.tar.gz</a></p>
+        <p class="size">Size: 273 MB</p>
+        <p>After downloading, extract with: <code>tar -xzf era5_output.tar.gz</code></p>
+    </div>
+    
+    <div class="file">
+        <h3>Option 3: Original GRIB2 File (Uncompressed)</h3>
+        <p><a href="era5_typical_year_6h_2x_1940-1940.grb2" download>Download era5_typical_year_6h_2x_1940-1940.grb2</a></p>
+        <p class="size">Size: 375 MB</p>
+        <p>Ready to use directly in OpenCPN</p>
+    </div>
+    
+    <div class="file">
+        <h3>Option 4: Download in Chunks (50 MB each)</h3>
+        <p>If large files fail, download these smaller chunks and reassemble:</p>
+        <div class="chunks">
+            <a href="era5_chunk_aa" download class="chunk-link">Chunk 1 (50 MB)</a>
+            <a href="era5_chunk_ab" download class="chunk-link">Chunk 2 (50 MB)</a>
+            <a href="era5_chunk_ac" download class="chunk-link">Chunk 3 (50 MB)</a>
+            <a href="era5_chunk_ad" download class="chunk-link">Chunk 4 (50 MB)</a>
+            <a href="era5_chunk_ae" download class="chunk-link">Chunk 5 (50 MB)</a>
+            <a href="era5_chunk_af" download class="chunk-link">Chunk 6 (50 MB)</a>
+            <a href="era5_chunk_ag" download class="chunk-link">Chunk 7 (50 MB)</a>
+            <a href="era5_chunk_ah" download class="chunk-link">Chunk 8 (25 MB)</a>
+        </div>
+        <p>Reassemble on your machine: <code>cat era5_chunk_* > era5_typical_year_6h_2x_1940-1940.grb2</code></p>
+    </div>
+    
+    <div class="file">
+        <h3>Option 5: NetCDF Version</h3>
+        <p><a href="era5_typical_year_6h_2x_1940-1940.nc" download>Download era5_typical_year_6h_2x_1940-1940.nc</a></p>
+        <p class="size">Size: 375 MB</p>
+        <p>Same data in NetCDF format (if you prefer this over GRIB2)</p>
+    </div>
+    
+    <hr>
+    <p><strong>File Comparison:</strong></p>
+    <table border="1" cellpadding="10" style="border-collapse: collapse;">
+        <tr>
+            <th>File</th>
+            <th>Size</th>
+            <th>Grid</th>
+            <th>Spacing</th>
+            <th>Best For</th>
+        </tr>
+        <tr style="background-color: #e8f5e9;">
+            <td><strong>Ultra-Compact (2.0°)</strong></td>
+            <td>24 MB</td>
+            <td>35 × 60</td>
+            <td>~222 km</td>
+            <td>Strategic planning, overview</td>
+        </tr>
+        <tr>
+            <td>Standard (0.5°)</td>
+            <td>375 MB</td>
+            <td>140 × 240</td>
+            <td>~56 km</td>
+            <td>Offshore routing, navigation</td>
+        </tr>
+    </table>
+    <br>
+    <p><strong>Common Details:</strong></p>
+    <ul>
+        <li>Temporal Resolution: 6-hourly (1,460 timesteps per year)</li>
+        <li>Coverage: North Atlantic (70°N-0°N, 100°W-20°E)</li>
+        <li>Year: 1940 (single year for testing)</li>
+        <li>Variables: U10 and V10 wind components</li>
+    </ul>
+</body>
+</html>
