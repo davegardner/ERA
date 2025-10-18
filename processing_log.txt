@@ -1,0 +1,2 @@
+/workspaces/ERA/down-climate.py:72: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  typical_times = pd.date_range("2001-01-01", periods=365*24, freq="H")

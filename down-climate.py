@@ -60,19 +60,35 @@ print("📊 Building climatological 'typical year'...")
 ds_all = xr.open_mfdataset("era5_data/era5_hourly_*_natl.nc", combine='by_coords')
 
 # Remove leap days to make a 365-day calendar
-dayofyear = ds_all['time'].dt.dayofyear
-valid = dayofyear < 366
-ds_all = ds_all.sel(time=valid)
-dayofyear = dayofyear.sel(time=valid)
-hour = ds_all['time'].dt.hour
+ds_all = ds_all.assign_coords(dayofyear=ds_all['valid_time'].dt.dayofyear)
+ds_all = ds_all.assign_coords(hour=ds_all['valid_time'].dt.hour)
+valid = ds_all['dayofyear'] < 366
+ds_all = ds_all.sel(valid_time=valid)
 
 # Group by (day of year, hour) and average across years
-ds_clim = ds_all.groupby([dayofyear, hour]).mean('time')
+print("  Grouping and averaging...")
+ds_clim = ds_all.groupby(['dayofyear', 'hour']).mean('valid_time')
 
-# Reconstruct a continuous hourly time axis for one typical year
-typical_times = pd.date_range("2001-01-01", periods=365*24, freq="H")
-ds_clim = ds_clim.assign_coords(time=typical_times)
-ds_clim = ds_clim.drop_vars(["dayofyear", "hour"], errors="ignore")
+# Create a simple integer index for time
+print("  Creating time coordinate...")
+n_times = 365 * 24
+time_index = np.arange(n_times)
+
+# Flatten the multi-index result
+ds_clim = ds_clim.stack(time=('dayofyear', 'hour'))
+ds_clim = ds_clim.sortby('time')
+
+# Replace the multi-index with a simple integer index
+ds_clim = ds_clim.reset_index('time', drop=True)
+ds_clim = ds_clim.assign_coords(time=time_index)
+
+# Add time attributes for CF compliance
+ds_clim['time'].attrs['units'] = 'hours since 2001-01-01 00:00:00'
+ds_clim['time'].attrs['calendar'] = 'standard'
+ds_clim['time'].attrs['long_name'] = 'time'
+
+# Ensure proper coordinate order for CDO
+ds_clim = ds_clim.transpose('time', 'latitude', 'longitude')
 
 # 3️⃣ Save to NetCDF
 nc_out = "era5_typical_year_10m_wind_natlantic.nc"
